@@ -14,7 +14,7 @@ if __name__=='__main__':
     while True:
         print("====================================================================")
         print("q : query, qs : query with string, gs : get settings, p : print history, c : clear history")
-        print("ec : export csv, ep : export pickle, quit : quit")
+        print("gh : get history, ghd : get history dict, ec : export csv, ep : export pickle, quit : quit")
         a = input("opcode > ")
         print("--------------------------------------------------------------------")
         if a == "gs":
@@ -28,6 +28,10 @@ if __name__=='__main__':
         elif a == "c":
             conn.clear_history()
             conn.print_history()
+        elif a == "gh":
+            print(conn.get_history())
+        elif a == "ghd":
+            print(conn.get_history_dict())
         elif a == "ec":
             conn.export_csv()
         elif a == "ep":

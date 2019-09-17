@@ -89,6 +89,16 @@ class MySQLConnector():
         return copy.copy(self.history)
 
 
+    def get_history_dict(self):
+        dic = {}
+        if len(self.history) < 1:
+            return dic
+        for key in self.history[0].keys():
+            l = map(lambda x : x[key],self.history)
+            dic[key] = copy.copy(list(l))
+        return dic
+        
+
     def print_history(self):
         if len(self.history) < 1:
             print("[]")
