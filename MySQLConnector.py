@@ -54,6 +54,33 @@ class MySQLConnector():
             print('Connection error occured')
 
 
+    def query_with_string(self,string):
+        if string is None:
+            print("string is None")
+            return
+        try:
+            string = str(string)
+        except:
+            print("query string error")
+            return
+
+        try:
+            with pymysql.connect( host = self.host
+                                , user = self.id
+                                , passwd = getpass.getpass()
+                                , db = self.db
+                                , cursorclass = self.cursor_type) as cur:
+                try:
+                    l = []
+                    cur.execute(string)
+                    self.history = cur.fetchall()
+                    self.print_history()
+                except:
+                    print('Query error occured')
+        except:
+            print('Connection error occured')
+
+
     def clear_history(self):
         self.history=[]
 

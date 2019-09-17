@@ -1,5 +1,4 @@
 __pycache__/
 *.sh
-tester.py
 *.csv
 *.pickle
