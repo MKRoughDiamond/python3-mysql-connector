@@ -6,15 +6,17 @@ if __name__=='__main__':
     parser.add_argument('-host', type=str,help='host ip/domain')
     parser.add_argument('-id', type=str, help='id')
     parser.add_argument('-db', type=str, help='Database name')
+    parser.add_argument('-verbose', action='store_true', default=False, help='verbose option')
     
     args = parser.parse_args()
 
-    conn = MySQLConnector(args.host, args.id, args.db)
+    conn = MySQLConnector(args.host, args.id, args.db, verbose=args.verbose)
     
     while True:
         print("====================================================================")
         print("q : query, qs : query with string, gs : get settings, p : print history, c : clear history")
-        print("gh : get history, ghd : get history dict, ec : export csv, ep : export pickle, quit : quit")
+        print("gh : get history, ghd : get history dict, ec : export csv, ep : export pickle, ri : remove invalid")
+        print("quit : quit")
         a = input("opcode > ")
         print("--------------------------------------------------------------------")
         if a == "gs":
@@ -32,6 +34,8 @@ if __name__=='__main__':
             print(conn.get_history())
         elif a == "ghd":
             print(conn.get_history_dict())
+        elif a == "ri":
+            conn.remove_invalid()
         elif a == "ec":
             conn.export_csv()
         elif a == "ep":

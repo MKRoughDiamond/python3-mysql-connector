@@ -4,12 +4,13 @@ import copy
 import pickle
 
 class MySQLConnector():
-    def __init__(self, host, id_, db, cursor_type=pymysql.cursors.DictCursor):
+    def __init__(self, host, id_, db, cursor_type=pymysql.cursors.DictCursor,verbose=False):
         self.host = host
         self.id = id_
         self.db = db
         self.history = []
         self.cursor_type = cursor_type
+        self.verbose = verbose
 
 
     def get_settings(self):
@@ -45,7 +46,8 @@ class MySQLConnector():
                             l = []
                             cur.execute(string)
                             self.history = cur.fetchall()
-                            self.print_history()
+                            if self.verbose:
+                                self.print_history()
                             return
                     except:
                         print('Query error occured')
@@ -74,7 +76,8 @@ class MySQLConnector():
                     l = []
                     cur.execute(string)
                     self.history = cur.fetchall()
-                    self.print_history()
+                    if self.verbose:
+                        self.print_history()
                 except:
                     print('Query error occured')
         except:
@@ -97,6 +100,12 @@ class MySQLConnector():
             l = map(lambda x : x[key],self.history)
             dic[key] = copy.copy(list(l))
         return dic
+
+    def remove_invalid(self):
+        l = list(filter(lambda x : not(None in x.values() or '' in x.values()),self.history))
+        self.history = copy.copy(l)
+        if self.verbose:
+            self.print_history()
         
 
     def print_history(self):
